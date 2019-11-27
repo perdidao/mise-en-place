@@ -1,0 +1,53 @@
+@mixin font-size($size) {
+	font-size: $size;
+	font-size: calculateRem($size);
+}
+
+// Font smoothing
+@mixin font-smoothing($value: on) {
+	@if $value == on {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	@else {
+		-webkit-font-smoothing: subpixel-antialiased;
+		-moz-osx-font-smoothing: auto;
+	}
+}
+
+// Custom selection colors
+@mixin selection($texto, $fundo){
+	::-moz-selection { color:$texto; background-color:$fundo; }
+	::selection { color:$texto; background-color:$fundo; }
+}
+
+// Hide text
+@mixin removeText{
+	text-indent:-9999em;
+	overflow:hidden;
+}
+
+// Placeholder styling
+@mixin placeholder($color){
+	::-webkit-input-placeholder { color:$color; }
+	:-moz-placeholder { color:$color; opacity:  1; }
+	::-moz-placeholder{ color:$color; opacity:  1; }
+	:-ms-input-placeholder{ color:$color; }
+}
+
+// Screen size related measures
+@function rel-desktop($value) {
+  @return #{($value / 1920) * 100}vw;
+}
+
+@function rel-notebook($value) {
+  @return #{($value / 1024) * 100}vw;
+}
+
+@function rel-mobile($value) {
+  @return #{($value / 360) * 100}vw;
+}
+
+@function rel($value) {
+  @return #{(($value / 16) * 100) + '%'};
+}

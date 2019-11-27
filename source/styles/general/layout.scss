@@ -1,0 +1,25 @@
+*{
+  box-sizing:border-box;
+  line-height:1.2;
+}
+
+body{
+	background-color:$white;
+  color:$black;
+  font-family:$default-font;
+  font-weight:400;
+  font-size:16px;
+
+  @media all and (max-width:$size-notebook) {
+    font-size:rel-notebook(16);
+  }
+
+  @media all and (max-width:$size-mobile) {
+    font-size:rel-mobile(16);
+  }
+}
+
+a{
+	color:inherit;
+  text-decoration:none;
+}
