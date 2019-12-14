@@ -48,6 +48,16 @@
   @return #{($value / 360) * 100}vw;
 }
 
-@function rel($value) {
+@function rel($value, $base: false) {
+  @if $base {
+    $base: 500;
+  } @else {
+    $base: 100;
+  }
+
+  @return #{($value / 1920) * $base}vw;
+}
+
+@function rem($value) {
   @return #{(($value / 16) * 100) + '%'};
 }
