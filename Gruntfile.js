@@ -94,15 +94,34 @@ module.exports = function(grunt){
       }
     },
 
+    cwebp: {
+      dev: {
+        options: {
+          q: 80
+        },
+        files: [{
+          expand: true,
+          cwd: 'source/images/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'static/images/'
+        }]
+      },
+      dist: {
+        options: {
+          q: 80
+        },
+        files: [{
+          expand: true,
+          cwd: 'source/images/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'dist/static/images/'
+        }]
+      }
+    },
+
     copy: {
       dev: {
         files: [
-          {
-            expand: true,
-            cwd: 'source/images/',
-            src: '**/*',
-            dest: 'static/images/'
-          },
           {
             expand: true,
             cwd: 'source/scripts/vendor/',
@@ -119,12 +138,6 @@ module.exports = function(grunt){
       },
       dist: {
         files: [
-          {
-            expand: true,
-            cwd: 'source/images/',
-            src: '**/*',
-            dest: 'dist/static/images/'
-          },
           {
             expand: true,
             cwd: 'source/scripts/vendor/',
@@ -172,13 +185,14 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-cwebp');
 
   // Notifications
   grunt.task.run('notify_hooks');
 
   // Tasks
-  grunt.registerTask('dev', ['clean:dev','copy:dev','sass:dev','postcss:dev','uglify:dev','connect','watch']);
-  grunt.registerTask('build', ['clean:dev','copy:dev','sass:dev','postcss:dev','uglify:dev']);
-  grunt.registerTask('deploy', ['clean:dist','copy:dist','sass:dist','postcss:dist','uglify:dist']);
+  grunt.registerTask('dev', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev','connect','watch']);
+  grunt.registerTask('build', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev']);
+  grunt.registerTask('deploy', ['clean:dist','copy:dist','cwebp:dist','sass:dist','postcss:dist','uglify:dist']);
 
 };
