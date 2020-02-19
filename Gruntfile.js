@@ -14,6 +14,11 @@ module.exports = function(grunt){
         tasks:['uglify:dev'],
         options: { livereload: true }
       },
+      files: {
+        files: [ 'source/images/**/*', 'source/fonts/**/*' ],
+        tasks:['copy:dev','cwebp:dev'],
+        options: { livereload: true }
+      },
       static:{
         files:[ 'index.html' ],
         options: { livereload: true }
