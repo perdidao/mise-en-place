@@ -17,6 +17,7 @@
     "autoprefixer": "^8.5.0",
     "cssnano": "^3.10.0",
     "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify-es": "^3.3.0",

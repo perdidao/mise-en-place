@@ -11,7 +11,7 @@ module.exports = function(grunt){
       },
       scripts:{
         files:[ 'source/scripts/**/*.js' ],
-        tasks:['uglify:dev'],
+        tasks: ['uglify:dev', 'concat'],
         options: { livereload: true }
       },
       files: {
@@ -81,6 +81,16 @@ module.exports = function(grunt){
       }
     },
 
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['static/scripts/vendor/*.js', 'static/scripts/main.min.js'],
+        dest: 'static/scripts/main.min.js',
+      },
+    },
+
     connect: {
       server: {
         options: {
@@ -102,7 +112,8 @@ module.exports = function(grunt){
     cwebp: {
       dev: {
         options: {
-          q: 80
+          q: 80,
+          sameExt: true
         },
         files: [{
           expand: true,
@@ -113,7 +124,8 @@ module.exports = function(grunt){
       },
       dist: {
         options: {
-          q: 80
+          q: 80,
+          sameExt: true
         },
         files: [{
           expand: true,
@@ -187,6 +199,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -196,8 +209,8 @@ module.exports = function(grunt){
   grunt.task.run('notify_hooks');
 
   // Tasks
-  grunt.registerTask('dev', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev','connect','watch']);
-  grunt.registerTask('build', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev']);
-  grunt.registerTask('deploy', ['clean:dist','copy:dist','cwebp:dist','sass:dist','postcss:dist','uglify:dist']);
+  grunt.registerTask('dev', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev', 'concat','connect','watch']);
+  grunt.registerTask('build', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev', 'concat']);
+  grunt.registerTask('deploy', ['clean:dist','copy:dist','cwebp:dist','sass:dist','postcss:dist','uglify:dist', 'concat']);
 
 };
