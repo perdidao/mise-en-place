@@ -1,63 +1,68 @@
 @mixin font-size($size) {
-	font-size: $size;
-	font-size: calculateRem($size);
+  font-size: $size;
+  font-size: calculateRem($size);
 }
 
 // Font smoothing
 @mixin font-smoothing($value: on) {
-	@if $value == on {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-	@else {
-		-webkit-font-smoothing: subpixel-antialiased;
-		-moz-osx-font-smoothing: auto;
-	}
+  @if $value == on {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  } @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
 }
 
 // Custom selection colors
-@mixin selection($texto, $fundo){
-	::-moz-selection { color:$texto; background-color:$fundo; }
-	::selection { color:$texto; background-color:$fundo; }
+@mixin selection($texto, $fundo) {
+  ::-moz-selection {
+    color: $texto;
+    background-color: $fundo;
+  }
+  ::selection {
+    color: $texto;
+    background-color: $fundo;
+  }
 }
 
 // Hide text
-@mixin removeText{
-	text-indent:-9999em;
-	overflow:hidden;
+@mixin removeText {
+  text-indent: -9999em;
+  overflow: hidden;
 }
 
 // Placeholder styling
-@mixin placeholder($color){
-	::-webkit-input-placeholder { color:$color; }
-	:-moz-placeholder { color:$color; opacity:  1; }
-	::-moz-placeholder{ color:$color; opacity:  1; }
-	:-ms-input-placeholder{ color:$color; }
+@mixin placeholder($color) {
+  ::-webkit-input-placeholder {
+    color: $color;
+  }
+  :-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+  ::-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+  :-ms-input-placeholder {
+    color: $color;
+  }
 }
 
 // Screen size related measures
-@function rel-desktop($value) {
-  @return #{($value / 1920) * 100}vw;
-}
-
-@function rel-notebook($value) {
-  @return #{($value / 1024) * 100}vw;
-}
-
-@function rel-mobile($value) {
-  @return #{($value / 360) * 100}vw;
-}
-
-@function rel($value, $base: false) {
-  @if $base {
-    $base: 500;
+@function res($value, $base: "desktop") {
+  @if $base == "notebook" {
+    $base: 1440;
+  } @else if $base == "mobile" {
+    $base: 320;
   } @else {
-    $base: 100;
+    $base: 1920;
   }
 
-  @return #{($value / 1920) * $base}vw;
+  @return #{($value * 100) / $base}vw;
 }
 
 @function rem($value) {
-  @return #{(($value / 16) * 100) + '%'};
+  @return #{(($value / 16) * 100) + "%"};
 }

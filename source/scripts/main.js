@@ -1,1 +1,1 @@
-console.log('Desenvolvido com <3 por lucasalmeida.dev')
+console.log("Desenvolvido com <3 por lucasalmeida.dev");
