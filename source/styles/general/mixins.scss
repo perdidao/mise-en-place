@@ -62,7 +62,3 @@
 
   @return #{($value * 100) / $base}vw;
 }
-
-@function rem($value) {
-  @return #{(($value / 16) * 100) + "%"};
-}
