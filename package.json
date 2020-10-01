@@ -1,16 +1,17 @@
 {
-  "name": "base",
-  "version": "1.0.0",
+  "name": "mise-en-place",
+  "version": "0.1.0",
   "scripts": {
     "dev": "grunt dev",
     "build": "grunt build",
     "deploy": "grunt deploy"
   },
-  "license": "MIT",
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-uglify": "^3.0.1",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-notify": "^0.4.5",
     "grunt-postcss": "^0.9.0"
   },
   "dependencies": {
@@ -18,14 +19,16 @@
     "cssnano": "^3.10.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "^2.1.0",
+    "grunt-contrib-connect": "^3.0.0",
     "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-sass": "^2.0.0",
     "grunt-contrib-uglify-es": "^3.3.0",
-    "grunt-cwebp": "^2.1.1",
-    "grunt-notify": "^0.4.5",
+    "grunt-cwebp": "^3.0.2",
+    "grunt-sass": "^3.1.0",
     "install": "^0.11.0",
+    "node-sass": "^4.12.0",
     "npm": "^6.4.1",
-    "pixrem": "^4.0.1",
-    "rfs": "^9.0.0"
+    "pixrem": "^4.0.1"
   }
 }

@@ -1,26 +1,26 @@
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
   grunt.initConfig({
-    pkg:grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package.json'),
 
-    watch:{
-      styles:{
-        files:[ 'source/styles/**/*.scss' ],
-        tasks:['sass:dev','postcss:dev'],
+    watch: {
+      styles: {
+        files: ['source/styles/**/*.scss'],
+        tasks: ['sass:dev', 'postcss:dev'],
         options: { livereload: true }
       },
-      scripts:{
-        files:[ 'source/scripts/**/*.js' ],
+      scripts: {
+        files: ['source/scripts/**/*.js'],
         tasks: ['uglify:dev', 'concat'],
         options: { livereload: true }
       },
       files: {
-        files: [ 'source/images/**/*', 'source/fonts/**/*' ],
-        tasks:['copy:dev','cwebp:dev'],
+        files: ['source/images/**/*', 'source/fonts/**/*'],
+        tasks: ['copy:dev', 'cwebp:dev'],
         options: { livereload: true }
       },
-      static:{
-        files:[ 'index.html' ],
+      static: {
+        files: ['*.php', '**/*.php'],
         options: { livereload: true }
       }
     },
@@ -48,7 +48,7 @@ module.exports = function(grunt){
       options: {
         processors: [
           require('pixrem')(),
-          require('autoprefixer')({browsers: 'last 2 versions'}),
+          require('autoprefixer')({ browsers: 'last 2 versions' }),
           require('cssnano')()
         ]
       },
@@ -63,8 +63,8 @@ module.exports = function(grunt){
     uglify: {
       dev: {
         options: {
-          mangle:false,
-          beautify:true,
+          mangle: false,
+          beautify: true,
         },
         files: {
           'static/scripts/main.min.js': ['source/scripts/main.js']
@@ -72,8 +72,8 @@ module.exports = function(grunt){
       },
       dist: {
         options: {
-          mangle:true,
-          beautify:false,
+          mangle: true,
+          beautify: false,
         },
         files: {
           'dist/static/scripts/main.min.js': ['source/scripts/main.js']
@@ -85,9 +85,13 @@ module.exports = function(grunt){
       options: {
         separator: ';',
       },
-      dist: {
+      dev: {
         src: ['static/scripts/vendor/*.js', 'static/scripts/main.min.js'],
         dest: 'static/scripts/main.min.js',
+      },
+      dist: {
+        src: ['dist/static/scripts/vendor/*.js', 'dist/static/scripts/main.min.js'],
+        dest: 'dist/static/scripts/main.min.js',
       },
     },
 
@@ -98,6 +102,16 @@ module.exports = function(grunt){
           base: './'
         }
       }
+    },
+
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: { 'dist/index.html': 'index.html' }
+      },
     },
 
     clean: {
@@ -113,7 +127,6 @@ module.exports = function(grunt){
       dev: {
         options: {
           q: 80,
-          sameExt: true
         },
         files: [{
           expand: true,
@@ -125,7 +138,6 @@ module.exports = function(grunt){
       dist: {
         options: {
           q: 80,
-          sameExt: true
         },
         files: [{
           expand: true,
@@ -197,6 +209,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -209,8 +222,8 @@ module.exports = function(grunt){
   grunt.task.run('notify_hooks');
 
   // Tasks
-  grunt.registerTask('dev', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev', 'concat','connect','watch']);
-  grunt.registerTask('build', ['clean:dev','copy:dev','cwebp:dev','sass:dev','postcss:dev','uglify:dev', 'concat']);
-  grunt.registerTask('deploy', ['clean:dist','copy:dist','cwebp:dist','sass:dist','postcss:dist','uglify:dist', 'concat']);
+  grunt.registerTask('dev', ['clean:dev', 'copy:dev', 'cwebp:dev', 'sass:dev', 'postcss:dev', 'uglify:dev', 'concat', 'connect', 'watch']);
+  grunt.registerTask('build', ['clean:dev', 'copy:dev', 'cwebp:dev', 'sass:dev', 'postcss:dev', 'uglify:dev', 'concat']);
+  grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'cwebp:dist', 'sass:dist', 'postcss:dist', 'uglify:dist', 'concat', 'htmlmin:dist']);
 
 };
