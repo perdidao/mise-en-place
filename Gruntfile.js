@@ -15,28 +15,22 @@ module.exports = function (grunt) {
       },
       files: {
         files: ['source/images/**/*', 'source/fonts/**/*'],
-        tasks: ['copy:dev', 'cwebp:dev'],
+        tasks: ['copy:dev', 'imagemin:dev'],
         options: { livereload: true },
       },
       static: {
-        files: ['*.php', '**/*.php'],
+        files: ['*.html', '**/*.html', '*.php', '**/*.php'],
         options: { livereload: true },
       },
     },
 
     sass: {
       dev: {
-        options: {
-          style: 'compact',
-        },
         files: {
           'static/styles/main.min.css': 'source/styles/main.scss',
         },
       },
       dist: {
-        options: {
-          style: 'minified',
-        },
         files: {
           'dist/static/styles/main.min.css': 'source/styles/main.scss',
         },
@@ -62,7 +56,7 @@ module.exports = function (grunt) {
           beautify: true,
         },
         files: {
-          'static/scripts/main.min.js': ['source/scripts/main.js'],
+          'static/scripts/main.min.js': ['source/scripts/main.con.js'],
         },
       },
       dist: {
@@ -71,7 +65,7 @@ module.exports = function (grunt) {
           beautify: false,
         },
         files: {
-          'dist/static/scripts/main.min.js': ['source/scripts/main.js'],
+          'dist/static/scripts/main.min.js': ['source/scripts/main.con.js'],
         },
       },
     },
@@ -82,11 +76,11 @@ module.exports = function (grunt) {
       },
       dev: {
         src: ['source/scripts/vendor/*.js', 'source/scripts/functions/*.js', 'source/scripts/main.js'],
-        dest: 'static/scripts/main.js',
+        dest: 'source/scripts/main.con.js',
       },
       dist: {
         src: ['source/scripts/vendor/*.js', 'source/scripts/functions/*.js', 'source/scripts/main.js'],
-        dest: 'dist/static/scripts/main.js',
+        dest: 'source/scripts/main.con.js',
       },
     },
 
@@ -118,29 +112,31 @@ module.exports = function (grunt) {
       },
     },
 
-    cwebp: {
+    imagemin: {
       dev: {
         options: {
-          q: 80,
+          optimizationLevel: 3,
+          svgoPlugins: [{ removeViewBox: false }, { removeUselessStrokeAndFill: true }, { removeEmptyAttrs: true }],
         },
         files: [
           {
             expand: true,
             cwd: 'source/images/',
-            src: ['**/*.{png,jpg,gif}'],
+            src: ['**/*.{png,jpg,gif,svg}'],
             dest: 'static/images/',
           },
         ],
       },
       dist: {
         options: {
-          q: 80,
+          optimizationLevel: 5,
+          svgoPlugins: [{ removeViewBox: false }, { removeUselessStrokeAndFill: true }, { removeEmptyAttrs: true }],
         },
         files: [
           {
             expand: true,
             cwd: 'source/images/',
-            src: ['**/*.{png,jpg,gif}'],
+            src: ['**/*.{png,jpg,gif,svg}'],
             dest: 'dist/static/images/',
           },
         ],
@@ -199,13 +195,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-cwebp')
+  grunt.loadNpmTasks('grunt-contrib-imagemin')
 
   // Notifications
   grunt.task.run('notify_hooks')
 
   // Tasks
-  grunt.registerTask('dev', ['clean:dev', 'copy:dev', 'cwebp:dev', 'sass:dev', 'postcss:dev', 'concat:dev', 'uglify:dev', 'connect', 'watch'])
-  grunt.registerTask('build', ['clean:dev', 'copy:dev', 'cwebp:dev', 'sass:dev', 'postcss:dev', 'concat:dev', 'uglify:dev'])
-  grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'cwebp:dist', 'sass:dist', 'postcss:dist', 'concat:dist', 'uglify:dist', 'htmlmin:dist'])
+  grunt.registerTask('dev', ['clean:dev', 'copy:dev', 'imagemin:dev', 'sass:dev', 'postcss:dev', 'concat:dev', 'uglify:dev', 'connect', 'watch'])
+  grunt.registerTask('build', ['clean:dev', 'copy:dev', 'imagemin:dev', 'sass:dev', 'postcss:dev', 'concat:dev', 'uglify:dev'])
+  grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'imagemin:dist', 'sass:dist', 'postcss:dist', 'concat:dist', 'uglify:dist', 'htmlmin:dist'])
 }

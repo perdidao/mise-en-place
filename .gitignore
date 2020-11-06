@@ -30,6 +30,7 @@ node_modules/
 # Build
 dist/
 static/
+source/scripts/main.con.js
 
 # Serverless directories
 .serverless
